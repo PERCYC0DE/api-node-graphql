@@ -1,0 +1,74 @@
+# Type definition, with ! we don't allow nulls
+type Query {
+  #products
+  products (limit: String!): [Product!]!
+  product(id: ID!): Product!
+  #categories
+  categories: [Category!]!
+  category(id: ID!): Category!
+}
+
+type Mutation {
+  login (email: EmailAddress!, password: String!): AuthResponse
+  addProduct(dto: CreateProductDto!): Product
+  updateProduct(id : ID!, dto: UpdateProductDto!): Product!
+  deleteProduct(id : ID!): ID
+  addCategory(dto: CreateCategoryDto): Category
+}
+
+# DEFINITION OF TYPES
+# Lists, [String], List of string, [Int], List of integers
+type Product {
+  id: ID!
+  name: String!
+  price: Float!
+  description: String!
+  image: String!
+  createAt: String!
+  categoryId: ID!
+  category: Category!
+}
+
+type Category {
+  id: ID!
+  name: String!
+  image: String!
+  products: [Product!]!
+}
+
+type AuthResponse {
+  access_token: String!
+  user: User!
+}
+
+type User {
+  id: ID!
+  email: String!
+  role: String!
+  createdAt: String!
+}
+
+# DEFINITION OF INPUTS
+# Inputs (like DTOs): To group several arguments
+input CreateProductDto {
+  name: String!
+  price: Int!
+  description: String!
+  image: String!
+  categoryId: ID!
+}
+
+input UpdateProductDto {
+  name: String
+  price: Int
+  description: String
+  image: String
+  categoryId: ID
+}
+
+input CreateCategoryDto {
+  name: CategoryNameType!
+  image: URL!
+}
+
+scalar CategoryNameType
